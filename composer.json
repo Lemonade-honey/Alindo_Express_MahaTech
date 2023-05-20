@@ -1,0 +1,13 @@
+{
+    "name": "mahatech/alindo-express",
+    "description": "Sistem Management jasa kurir paket Alindo Express",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Mahatech\\AlindoExpress\\": "app/"
+        }
+    },
+    "require": {
+        "php": ">=8"
+    }
+}
