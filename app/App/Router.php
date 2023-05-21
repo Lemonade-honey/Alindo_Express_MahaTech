@@ -29,7 +29,11 @@ class Router{
         // looping setiap data yang ada dalam array routes
         foreach(self::$routes as $route){
             if($route['path'] == $path && $route['method'] == $method){
-                echo "PATH ADA DI DALAM ROUTE";
+                // echo "PATH ADA DI DALAM ROUTE";
+
+                $controller = new $route['controller'];
+                $function = $route['function'];
+                $controller->$function();
                 return;
             }
         }

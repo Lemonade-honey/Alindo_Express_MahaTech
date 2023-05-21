@@ -1,0 +1,146 @@
+.box-input{
+    padding: 0 .5rem;
+}
+.box-input.text{
+    padding-top: .3rem;
+}
+.judul-kontent{
+    text-align: left;
+    margin-bottom: 1rem;
+    text-decoration: underline;
+}
+
+
+.control-form{
+    margin-bottom: 1rem;
+}
+.container-paket{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}.container-paket form{
+    border: 1px solid var(--global-main_border-color);
+    border-radius: .5rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}.container-paket form .form-container{
+    padding: 0.5em;
+    max-width:40rem;
+    width: 100%;
+}.container-paket form .form-container .form-input{
+    margin-bottom: 1rem;
+}.container-paket form .form-container .form-input.flex{
+    display: flex;
+}.container-paket form .form-container .form-input.flex .box{
+    width: 100%;
+}.container-paket form .form-container .form-input .multy-input{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}.container-paket form .form-container .form-input .multy-input .multy-input-btn{
+    float: right;
+    padding:  .4rem .5rem;
+    margin-left: 1rem;
+    background-color: rgb(252, 85, 85);
+    border-radius: .5rem;
+    cursor: pointer;
+}.container-paket form .form-container .form-input .multy-input .multy-input-btn:hover{
+    color: #fff;
+}
+
+.container-paket form .form-container .form-input .list, .list2{
+    width: 100%;
+    list-style: none;
+}.container-paket form .form-container .form-input .list-items{
+    border: 1px solid var(--global-main_border-color);
+    padding: 0.3rem 0.5rem;
+    background: #fcfcfc;
+}.container-paket form .form-container .form-input .list-items:hover{
+    border-color: orange;
+    background: #c4c4c4;
+}.container-paket form .form-container .form-input textarea{
+    resize: none;
+    height: 100%;
+}.container-paket form .form-container .form-input.radio{
+    display: flex;
+    justify-content: space-between;
+}.container-paket form .form-container .form-input.radio label{
+    cursor: pointer;
+}.container-paket form .form-container .form-input.radio label:hover{
+    text-decoration: underline;
+}
+
+/* ================ data pengirim penerima ============== */
+.container-paket form .form-container .sub-form-container:first-child{
+    margin-bottom: 2.5rem;
+}
+
+/* ================ form Submit Action ================ */
+.container-paket form .form-container .form-submit{
+    display: flex;
+    justify-content: space-evenly;
+}.container-paket form .form-container .form-submit .btn-submit{
+    cursor: pointer;
+    padding: .5rem 1rem;
+    border: 1px solid #2581d6;
+    border-radius: .5rem;
+    font-size: 1rem;
+    background: #3085d6;
+    color: #fff;
+}.container-paket form .form-container .form-submit .btn-submit.red{
+    border-color: red;
+    background: #d33;
+}.container-paket form .form-container .form-submit .btn-submit:hover{
+    opacity: .8;
+}
+
+/* Track Style */
+.container-track{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}.container-track .sub-container{
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.container-track .sub-container table{
+    width: 100%;
+    border-collapse: collapse;
+}.container-track .sub-container table, th, tr, td{
+    border: 1px solid;
+}.container-track .sub-container table td{
+    padding: .3rem;
+}
+.container-track .sub-container table td:first-child{
+    width: 7rem;
+}
+
+
+
+
+
+@media(max-width: 890px){
+    .judul-kontent{
+        font-size: 2rem;
+    }
+    .container-paket form{
+        flex-direction: column;
+        border: none;
+    }.container-paket form .form-container{
+        border: 1px solid var(--global-main_border-color);
+        border-radius: .5rem;
+    }
+}
+
+@media(max-width: 450px){
+    .btn-action{
+        justify-content: center;
+    }
+    .btn-action .btn{
+        padding: .5rem .5rem;
+    }
+}

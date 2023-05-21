@@ -1,0 +1,16 @@
+.container form{
+    max-width: 20rem;
+    width: 100%;
+}.container form .input-form{
+    margin: 1rem 0;
+}.container form .form-submit{
+    text-align: center;
+}.container form .form-submit .btn{
+    cursor: pointer;
+    padding: 0.5rem 1.5rem;
+    font-size: 1.1rem;
+    background: rgb(47, 140, 247);
+    border-radius: .5rem;
+}.container form .form-submit .btn:hover{
+    background: rgb(27, 129, 247);
+}

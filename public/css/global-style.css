@@ -1,0 +1,63 @@
+*{
+    padding: 0;
+    margin: 0;
+    border: none;
+    box-sizing: border-box;
+    outline: none;
+}
+
+:root{
+    --global-main_border-color : #bdbdbd
+}
+
+section{
+    padding: 2rem 9%;
+}
+
+.box-input{
+    width: 100%;
+    padding: 0.5rem 1rem;
+    height: 2.1rem;
+    border: 1px solid var(--global-main_border-color);
+    border-radius: .5rem;
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+.error{
+    color: red;
+    text-decoration: underline;
+}
+
+/* ==================== BUTTON STYLE GLOBAL ================== */
+.btn-action{
+    width: 100%;
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: flex-end;
+}.btn-action .btn{
+    cursor: pointer;
+    padding: .5rem 1rem;
+    border: 1px solid #2581d6;
+    border-radius: .5rem;
+    font-size: 1rem;
+    background: #3085d6;
+    color: #fff;
+    text-decoration: none;
+    margin-left: 1rem;
+}.btn-action .btn::selection{
+    background: none;
+    color: none;
+}
+.btn-action .btn:hover{
+    opacity: .8;
+}.btn-action .btn.red{
+    border-color: red;
+    background: #d33;
+}
+/* ==================== BUTTON STYLE GLOBAL ================== */
