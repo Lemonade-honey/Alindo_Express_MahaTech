@@ -14,14 +14,14 @@ class PaketRepository{
     }
 
     public function save(Paket $paket): Paket{
-        $stmt = $this->connection->prepare('INSERT INTO paket(resi, tanggal_pembuatan, data_paket, biaya_paket, vendor_paket) VALUES(?, ?, ?, ?, ?)');
-        $stmt->execute([$paket->kodeResi, $paket->tanggalPembuatan, $paket->dataPaket, $paket->biayaPaket, $paket->vendorPaket]);
+        $stmt = $this->connection->prepare('INSERT INTO paket(resi, tanggal_pembuatan, data_paket, biaya_paket, vendor_paket, riwayat_paket) VALUES(?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$paket->kodeResi, $paket->tanggalPembuatan, $paket->dataPaket, $paket->biayaPaket, $paket->vendorPaket, $paket->riwayatPaket]);
 
         return $paket;
     }
 
     public function findByKodeResi(string $kodeResi): ?Paket{
-        $stmt = $this->connection->prepare('SELECT resi, tanggal_pembuatan, data_paket, biaya_paket, vendor_paket, status_paket FROM paket WHERE resi = ?');
+        $stmt = $this->connection->prepare('SELECT resi, tanggal_pembuatan, data_paket, biaya_paket, vendor_paket, riwayat_paket, status_paket FROM paket WHERE resi = ?');
         $stmt->execute([$kodeResi]);
 
         try{
@@ -32,6 +32,7 @@ class PaketRepository{
                 $paket->dataPaket = $row['data_paket'];
                 $paket->biayaPaket = $row['biaya_paket'];
                 $paket->vendorPaket = $row['vendor_paket'];
+                $paket->riwayatPaket = $row['riwayat_paket'];
                 $paket->statusPaket = $row['status_paket'];
 
 

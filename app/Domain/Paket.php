@@ -13,6 +13,7 @@ class Paket{
     public ?string $dataPaket = null;
     public ?string $biayaPaket = null;
     public ?string $vendorPaket = null;
+    public ?string $riwayatPaket = null;
 
     // Fitur Track Paket belum tersedia
     // public ?array $trackPaket = null;
