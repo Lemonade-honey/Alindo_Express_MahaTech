@@ -1,19 +1,9 @@
-.box-input{
-    padding: 0 .5rem;
-}
-.box-input.text{
-    padding-top: .3rem;
-}
-.judul-kontent{
+.judul-page{
     text-align: left;
     margin-bottom: 1rem;
     text-decoration: underline;
 }
 
-
-.control-form{
-    margin-bottom: 1rem;
-}
 .container-paket{
     display: flex;
     align-items: center;
@@ -35,19 +25,15 @@
     display: flex;
 }.container-paket form .form-container .form-input.flex .box{
     width: 100%;
-}.container-paket form .form-container .form-input .multy-input{
+}.container-paket form .form-container .form-input .multy-input-biaya-lainnya{
     display: flex;
     align-items: center;
     justify-content: center;
-}.container-paket form .form-container .form-input .multy-input .multy-input-btn{
-    float: right;
-    padding:  .4rem .5rem;
-    margin-left: 1rem;
-    background-color: rgb(252, 85, 85);
-    border-radius: .5rem;
-    cursor: pointer;
-}.container-paket form .form-container .form-input .multy-input .multy-input-btn:hover{
-    color: #fff;
+    flex-direction: column;
+}.container-paket form .form-container .form-input .multy-input-biaya-lainnya .form-input{
+    width: 100%;
+    display: flex;
+    gap: .2rem;
 }
 
 .container-paket form .form-container .form-input .list, .list2{
@@ -66,6 +52,8 @@
 }.container-paket form .form-container .form-input.radio{
     display: flex;
     justify-content: space-between;
+}.container-paket form .form-container .form-input .fullwidth{
+    width: 100%;
 }.container-paket form .form-container .form-input.radio label{
     cursor: pointer;
 }.container-paket form .form-container .form-input.radio label:hover{
@@ -81,6 +69,7 @@
 .container-paket form .form-container .form-submit{
     display: flex;
     justify-content: space-evenly;
+    flex-wrap: wrap;
 }.container-paket form .form-container .form-submit .btn-submit{
     cursor: pointer;
     padding: .5rem 1rem;
@@ -89,6 +78,9 @@
     font-size: 1rem;
     background: #3085d6;
     color: #fff;
+}.container-paket form .form-container .form-submit .btn-submit.green{
+    border-color: rgb(27, 129, 27);
+    background: rgb(56, 194, 74);
 }.container-paket form .form-container .form-submit .btn-submit.red{
     border-color: red;
     background: #d33;
@@ -120,7 +112,17 @@
 }
 
 
-
+/* =============== Detail Paket ================ */
+.container-detail-paket{
+    width: 100%;
+    border: 1px solid var(--global-main_border-color);
+    border-radius: .5rem;
+    padding: .5rem;
+}.container-detail-paket ol{
+    margin-left: 1rem;
+}.container-detail-paket ol li:not(:last-child){
+    margin-bottom: .5rem;
+}
 
 
 @media(max-width: 890px){
