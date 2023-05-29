@@ -18,7 +18,8 @@ class PaketRegisterRequest{
 
     // biaya_paket
     public ?string $biayaKirim = null;
-    public ?string $biayaLainnya = null;
+    public ?array $keteranganBiayaLainnya = null;
+    public ?array $hargaBiayaLainnya = null;
     public ?string $totalBiaya = null;
 
     // Karyawan

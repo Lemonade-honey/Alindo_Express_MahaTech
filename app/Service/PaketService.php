@@ -32,13 +32,12 @@ class PaketService{
             "nama_penerima" => $request->namaPenerima,
             "alamat_penerima" => $request->alamatPenerima,
             "hp_penerima" => $request->hpPenerima
-           ];
+        ];
 
         $biayaPaket = [
             "biaya_kirim" => $request->biayaKirim,
+            "biaya_lainnya" => $this->biayaLainnya($request)
         ];
-
-        $vendorPaket = null;
 
         $updatePaket = [
             "Action" => "Create Invoice",
@@ -55,7 +54,6 @@ class PaketService{
             $paket->tanggalPembuatan = date("Y/m/d H:i:s");
             $paket->dataPaket = serialize($dataPaket);
             $paket->biayaPaket = serialize($biayaPaket);
-            $paket->vendorPaket = serialize($vendorPaket);
             $paket->updatePaket = serialize($updatePaket);
 
             if(!$this->paketRepository->checkKodeResiInDatabase($paket->kodeResi)){
@@ -149,17 +147,36 @@ class PaketService{
         if($request->biayaKirim == null || $request->biayaKirim == 0 ){
             throw new \Exception('Inputan Biaya Kirim tidak boleh Null atau Kosong');
         }
-
-        // Biaya Lainnya
-        // if($request->biayaLainnya == null || $request->biayaLainnya == '' ){
-        //     $request->biayaLainnya = null;
-        // }
         
         // Total Biaya
         if($request->totalBiaya == null || $request->totalBiaya == 0 ){
             throw new \Exception('Inputan Biaya Total tidak boleh Null atau Kosong');
         }
         
+    }
+
+    /**
+     * CONFIG BIAYA LAINNYA
+     * 
+     * return berupa string gabungan dari keterangan dan harga
+     */
+    public function biayaLainnya(PaketRegisterRequest $request): ?array{
+        if($request->keteranganBiayaLainnya == null || $request->keteranganBiayaLainnya == '' && $request->hargaBiayaLainnya == null || $request->hargaBiayaLainnya == ''){
+            return null;
+        }else{
+            if(count($request->keteranganBiayaLainnya) == count($request->hargaBiayaLainnya)){
+                for($i = 0; $i < count($request->keteranganBiayaLainnya); $i++){
+                    $gabungan[] = [
+                        'keterangan' => $request->keteranganBiayaLainnya[$i],
+                        'harga' => $request->hargaBiayaLainnya[$i]
+                    ];
+                }
+
+                return $gabungan;
+            }else{
+                throw new \Exception('Inputan Biaya lainnya harus diisi semua');
+            }
+        }
     }
 
     /**
@@ -191,8 +208,12 @@ class PaketService{
         return $kodeResi;
     }
 
-    // resi auto increment
-    public function autoIncrementKodeResi(string $lastDigitKode): string{
+    /**
+     * AUTO INCREMENT KODE RESI
+     * 
+     * menambahkan secara otoamatis pada 4 digit angka terakhir kode resi
+     */
+    private function autoIncrementKodeResi(string $lastDigitKode): string{
         // ubah/hapus prefix 0 didepan real number
         (int)$lastDigitKode = ltrim($lastDigitKode, 0);
 
@@ -205,11 +226,5 @@ class PaketService{
         }
 
         return (string)str_pad($lastDigitKode, 4, '0', STR_PAD_LEFT);
-    }
-
-    // resi validate
-    private function checkKodeResi(string $kodeResi): bool{
-        // hasil dari db repo
-        return true;
     }
 }

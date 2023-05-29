@@ -38,7 +38,8 @@ class PaketController{
         $request->alamatPenerima = $_POST['alamat-tujuan'];
         $request->hpPenerima = $_POST['no-HP-penerima'];
         $request->biayaKirim = $_POST['biaya-kirim'];
-        $request->biayaLainnya = null;
+        $request->keteranganBiayaLainnya = $_POST['keterangan'];
+        $request->hargaBiayaLainnya = $_POST['harga'];
         $request->totalBiaya = $_POST['total_harga'];
 
         // Karyawan
