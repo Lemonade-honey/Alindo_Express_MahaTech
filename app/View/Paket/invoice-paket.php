@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/global-style.css">
-    <link rel="stylesheet" href="css/paket-style.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/css/global-style.css">
+    <link rel="stylesheet" href="<?= ROOT ?>/css/paket-style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.1/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -15,7 +15,9 @@
 <body>
     <section>
         <h1><div class="judul-page">Input Data Paket</div></h1>
-        <p class="error">Input Empty Error dll</p>
+        <?php if(isset($response['error'])){?>
+            <p class="error"><?= $response['error']?></p>
+        <?php }?>
         <div class="container-paket">
             <form action="" autocomplete="off" method="POST" id="form">
                 <!-- id barang -->
@@ -33,16 +35,16 @@
                     </div>
                     <div class="form-input">
                         <p>Kota Tujuan</p>
-                        <input type="search" id="kota-tujuan" class="box-input" name="kota-tujuan" value="">
+                        <input type="search" id="kota-tujuan" class="box-input" name="kota-tujuan" value="<?php if(isset($_POST['kota-tujuan'])) echo $_POST['kota-tujuan']?>">
                             <ul class="list"></ul>
                     </div>
                     <div class="form-input">
                         <p>Jumlah Koli</p>
-                        <input type="number" name="jumlah-koli" id="" class="box-input" value="">
+                        <input type="number" name="jumlah-koli" id="" class="box-input" value="<?php if(isset($_POST['jumlah-koli'])) echo $_POST['jumlah-koli']?>">
                     </div>
                     <div class="form-input">
                         <p>Harga/Kg</p>
-                        <input type="number" name="harga-kg" id="harga-kg" value="" class="box-input" onchange="calculetBiayaKirim()">
+                        <input type="number" name="harga-kg" id="harga-kg" value="<?php if(isset($_POST['harga-kg'])) echo $_POST['harga-kg']?>" class="box-input" onchange="calculetBiayaKirim()">
                     </div>
                     <div class="form-input">
                         <p>Berat</p>
@@ -58,11 +60,11 @@
                     </div>
                     <div class="form-input radio">
                         <div class="radio">
-                            <input type="radio" name="status-barang" id="iya">
+                            <input type="radio" name="status_periksa" id="iya" value="Diperiksa" required>
                             <label for="iya">Diperiksa</label>
                         </div>
                         <div class="radio">
-                            <input type="radio" name="status-barang" id="tidak">
+                            <input type="radio" name="status_periksa" id="tidak" value="Tidak Diperiksa">
                             <label for="tidak">Tidak Diperikasa</label>
                         </div>
                     </div>
@@ -73,7 +75,7 @@
                     <div class="sub-form-container">
                         <div class="form-input">
                             <p>Nama Pengirim</p>
-                            <input type="text" name="nama-pengirim" id="" class="box-input capital">
+                            <input type="text" name="nama-pengirim" id="" class="box-input capital" required>
                         </div>
                         <div class="form-input">
                             <p>No HP Pengirim</p>
@@ -92,7 +94,7 @@
                         </div>
                         <div class="form-input">
                             <p>No HP Penereima</p>
-                            <input type="number" name="no-HP-pengirim" id="" class="box-input">
+                            <input type="number" name="no-HP-penerima" id="" class="box-input">
                         </div>
                     </div>
                 </div>
@@ -111,13 +113,13 @@
                     <div class="form-input">
                         <p><strong>Total</strong></p>
                         <p class="box-input disabled text">Rp.<span style="margin-left: .4rem;" id="show-total-harga">0</span></p>
-                        <input type="number" name="total-harga" id="total-harga" class="box-input disabled" disabled value="0" style="display: none;">
+                        <input type="number" style="display: none;" name="total_harga" id="total-harga" class="box-input disabled"  value="0">
                     </div>
                     <div class="form-submit">
                         <!-- <p class="btn-submit red" id="cancel">Cancel</p> -->
                         <button type="button" class="btn-submit red" id="cancel">Cancel</button>
                         <!-- <p class="btn-submit" id="submit">Buat Invoice</p> -->
-                        <button class="btn-submit" type="button" id="submit">Buat Invoice</button>
+                        <button class="btn-submit" type="submit" id="submit">Buat Invoice</button>
                     </div>
                 </div>
             </form>
@@ -187,10 +189,10 @@
 
         const targetContainerTotalHarga = document.getElementById('show-total-harga')
         targetContainerTotalHarga.innerHTML = new Intl.NumberFormat().format(totalHarga)
-    }
 
-    function setTotalHarga(){
-        const totalHarga = document.getElementById('total-harga')
+        const totalHargaInput = document.getElementById('total-harga')
+        totalHargaInput.value = totalHarga
+
     }
 
     // main runner

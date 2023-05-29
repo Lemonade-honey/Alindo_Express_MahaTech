@@ -1,7 +1,7 @@
 <?php
 namespace Mahatech\AlindoExpress\App;
 class View{
-    public static function render(string $targetRender){
+    public static function render(string $targetRender, ?array $response = []){
         define('ROOT', 'http://localhost:8080');
         require(__DIR__ . "/../View/" . $targetRender . ".php");
     }
