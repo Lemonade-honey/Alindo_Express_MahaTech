@@ -40,24 +40,31 @@ class PaketService{
 
         $vendorPaket = null;
 
-        $riwayatPaket = [
-            "Action" => "Create",
+        $updatePaket = [
+            "Action" => "Create Invoice",
             "Massage" => date("d M Y, H:i:s") . " by " . "nama orang"
         ];
 
         try {
 
             Database::beginTransaction();
+            Repeat:
 
             $paket = new Paket;
-            $paket->kodeResi = 123;
+            $paket->kodeResi = $this->generateKodeResi();
             $paket->tanggalPembuatan = date("Y/m/d H:i:s");
             $paket->dataPaket = serialize($dataPaket);
             $paket->biayaPaket = serialize($biayaPaket);
             $paket->vendorPaket = serialize($vendorPaket);
-            $paket->riwayatPaket = serialize($riwayatPaket);
+            $paket->updatePaket = serialize($updatePaket);
 
-            $this->paketRepository->save($paket);
+            if(!$this->paketRepository->checkKodeResiInDatabase($paket->kodeResi)){
+                // save to Database
+                $this->paketRepository->save($paket);
+            }else{
+                // naik ke atas untuk ulangi program
+                goto Repeat;
+            }
 
             Database::commitTransaction();
         }catch (\Exception $exception) {
@@ -153,5 +160,56 @@ class PaketService{
             throw new \Exception('Inputan Biaya Total tidak boleh Null atau Kosong');
         }
         
+    }
+
+    /**
+     * RESI GENERATOR
+     * 
+     * kode resi berbentuk 10 digit number yang terdiri dari : 6 digit pertama menunjukkan tanggal, 4 digit terakhir menunjukkan urutan paket hari itu
+     */
+    private function generateKodeResi(){
+        // define set timezone date
+        date_default_timezone_set('ASIA/JAKARTA');
+
+        // check last input resi di database
+        $lastInputKode = $this->paketRepository->getLastKodeResi();
+
+        if($lastInputKode != null){
+            // bagi kode menjadi 2 bagian
+            $lastInputKode = str_split($lastInputKode, 6);
+            if($lastInputKode[0] == date('dmy')){
+                $kodeResi = $lastInputKode[0] . $this->autoIncrementKodeResi($lastInputKode[1]);
+            }else{
+                $kodeResi = date('dmy') . '0000' . 'kosong';
+            }
+
+        }else{
+            // jika isi database kosong
+            $kodeResi = date('dmy') . '0000';
+        }
+
+        return $kodeResi;
+    }
+
+    // resi auto increment
+    public function autoIncrementKodeResi(string $lastDigitKode): string{
+        // ubah/hapus prefix 0 didepan real number
+        (int)$lastDigitKode = ltrim($lastDigitKode, 0);
+
+        if($lastDigitKode == null){
+            //jika tidak ada angka di real number/ == 0
+            $lastDigitKode = 1; 
+        }else{
+            // jika ada angka real maka incrementkan (++)
+            $lastDigitKode = $lastDigitKode + 1;
+        }
+
+        return (string)str_pad($lastDigitKode, 4, '0', STR_PAD_LEFT);
+    }
+
+    // resi validate
+    private function checkKodeResi(string $kodeResi): bool{
+        // hasil dari db repo
+        return true;
     }
 }

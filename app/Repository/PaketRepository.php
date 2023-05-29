@@ -42,4 +42,37 @@ class PaketRepository{
             $stmt->closeCursor();
         }
     }
+
+    public function checkKodeResiInDatabase(string $kodeResi): bool{
+        $stmt = $this->connection->prepare('SELECT resi FROM paket WHERE resi = ?');
+        $stmt->execute([$kodeResi]);
+
+        try{
+            if($stmt->fetch()){
+                // kode resi ada di database
+                return true;
+            }else{
+                // kode tidak ada di database (Aman)
+                return false;
+            }
+        }finally{
+            $stmt->closeCursor();
+        }
+    }
+
+    public function getLastKodeResi(): ?string{
+        $stmt = $this->connection->prepare('SELECT resi FROM paket ORDER BY resi DESC LIMIT 1');
+        $stmt->execute();
+
+        try{
+            if($row = $stmt->fetch()){
+                // jika ada balikkan kode resi
+                return $row['resi'];
+            }else{
+                return null;
+            }
+        } finally{
+            $stmt->closeCursor();
+        }
+    }
 }
