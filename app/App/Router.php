@@ -28,12 +28,16 @@ class Router{
 
         // looping setiap data yang ada dalam array routes
         foreach(self::$routes as $route){
-            if($route['path'] == $path && $route['method'] == $method){
+            $pattern = "#^" . $route['path'] . "$#";
+            if(preg_match($pattern, $path, $variabels) && $route['method'] == $method){
                 // echo "PATH ADA DI DALAM ROUTE";
 
                 $controller = new $route['controller'];
                 $function = $route['function'];
-                $controller->$function();
+
+                // hapus data array kecocokan di index 0
+                array_shift($variabels);
+                call_user_func_array([$controller, $function], $variabels);
                 return;
             }
         }
