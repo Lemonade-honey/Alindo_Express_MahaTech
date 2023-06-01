@@ -46,13 +46,23 @@ class PaketController{
         $request->karyawanProfile = 'Daffa Manual';
 
         try {
-            $this->paketService->tambahPaket($request);
+            $response = $this->paketService->tambahPaket($request);
             //jika tidak ada error response
-            View::redirect('google.com');
+            View::redirect('/detail-paket/' . $response->kodeResi);
         } catch (\Exception $ex) {
             View::render('Paket/invoice-paket', [
                 'error' => $ex->getMessage()
             ]);
+        }
+    }
+
+    public function detailPaket(string $kodeResi){
+        try{
+            View::render('Paket/detail-paket', [
+                'response-paket' => $this->paketService->detailPaket($kodeResi)
+            ]);
+        } catch(\Exception $ex){
+            die($ex->getMessage());
         }
     }
 }

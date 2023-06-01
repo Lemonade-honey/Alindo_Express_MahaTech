@@ -5,6 +5,7 @@ namespace Mahatech\AlindoExpress\Service;
 use Mahatech\AlindoExpress\Config\Database;
 use Mahatech\AlindoExpress\Domain\Paket;
 use Mahatech\AlindoExpress\Model\Paket\PaketRegisterRequest;
+use Mahatech\AlindoExpress\Model\Paket\PaketRegisterResponse;
 use Mahatech\AlindoExpress\Repository\PaketRepository;
 
 class PaketService{
@@ -14,7 +15,7 @@ class PaketService{
         $this->paketRepository = $paketRepository;
     }
 
-    public function tambahPaket(PaketRegisterRequest $request){
+    public function tambahPaket(PaketRegisterRequest $request): PaketRegisterResponse{
         $this->tambahPaketValidation($request);
 
         date_default_timezone_set("Asia/Jakarta");
@@ -36,12 +37,12 @@ class PaketService{
 
         $biayaPaket = [
             "biaya_kirim" => $request->biayaKirim,
-            "biaya_lainnya" => $this->biayaLainnya($request)
+            "biaya_lainnya" => $this->biayaLainnya($request),
+            "biaya_total" => $request->totalBiaya
         ];
 
         $updatePaket = [
-            "Action" => "Create Invoice",
-            "Massage" => date("d M Y, H:i:s") . " by " . "nama orang"
+            "Create Invoice => " . " nama orang [" . date('H:i, d M Y') . "]"
         ];
 
         try {
@@ -59,12 +60,15 @@ class PaketService{
             if(!$this->paketRepository->checkKodeResiInDatabase($paket->kodeResi)){
                 // save to Database
                 $this->paketRepository->save($paket);
+                $response = new PaketRegisterResponse;
+                $response->kodeResi = $paket->kodeResi;
+                Database::commitTransaction();
+                return $response;
             }else{
                 // naik ke atas untuk ulangi program
                 goto Repeat;
             }
 
-            Database::commitTransaction();
         }catch (\Exception $exception) {
             Database::rollbackTransaction();
             throw $exception;
@@ -197,7 +201,7 @@ class PaketService{
             if($lastInputKode[0] == date('dmy')){
                 $kodeResi = $lastInputKode[0] . $this->autoIncrementKodeResi($lastInputKode[1]);
             }else{
-                $kodeResi = date('dmy') . '0000' . 'kosong';
+                $kodeResi = date('dmy') . '0000';
             }
 
         }else{
@@ -226,5 +230,41 @@ class PaketService{
         }
 
         return (string)str_pad($lastDigitKode, 4, '0', STR_PAD_LEFT);
+    }
+
+    /**
+     * DETAIL PAKET
+     * 
+     * Menampilkan data data paket yang tersimpan didatabase
+     */
+    public function detailPaket(string $kodeResi): array{
+        // check apakah kode resi ada di database
+        if($this->paketRepository->findByKodeResi($kodeResi) != null){
+            $paket = new Paket;
+            $paket = $this->paketRepository->findByKodeResi($kodeResi);
+
+            $kodeResi = $paket->kodeResi;
+            $tanggalPembuatan = $paket->tanggalPembuatan;
+            $dataPaket = unserialize($paket->dataPaket);
+            $biayaPaket = unserialize($paket->biayaPaket);
+            $vendorPaket = unserialize($paket->vendorPaket);
+            $updatePaket = unserialize($paket->updatePaket);
+            $statusPaket = $paket->statusPaket;
+
+            $detailPaket = [
+                'kode-resi' => $kodeResi,
+                'tanggal' => $tanggalPembuatan,
+                'data-paket' => $dataPaket,
+                'biaya-paket' => $biayaPaket,
+                'vendor-paket' => $vendorPaket,
+                'update-paket' => $updatePaket,
+                'status-paket' => $statusPaket
+
+            ];
+
+            return $detailPaket;
+        }else{
+            throw new \Exception('Data tidak ditemukan');
+        }        
     }
 }

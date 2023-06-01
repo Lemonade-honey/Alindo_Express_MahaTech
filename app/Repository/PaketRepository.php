@@ -41,6 +41,8 @@ class PaketRepository{
         }finally{
             $stmt->closeCursor();
         }
+
+        return null;
     }
 
     public function checkKodeResiInDatabase(string $kodeResi): bool{
