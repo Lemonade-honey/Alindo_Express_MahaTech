@@ -1,7 +1,6 @@
 <?php
     // print_r($response['response-paket']);
     $paket = $response['response-paket'];
-    print_r($paket['update-paket']);
     // echo $paket['data-paket']['kota_tujuan'];
 ?>
 
@@ -153,25 +152,16 @@
             <h1><div class="judul-page">Vendor Invoice</div></h1>
         </div>
         <div class="container-detail-paket">
-            <?php if($paket['vendor-paket'] == null){?>
-            <p>Vendor Set Empty <a href="/detail-invoice/<?= $paket['kode-resi']?>/vendor">Set up</a></p>
+            <?php if($paket['vendor-paket'] == null || $paket['vendor-paket']['vendor'] == null){?>
+                <p>Vendor Set Empty <a href="/detail-paket/<?= $paket['kode-resi']?>/vendor">Set up</a></p>
+            <?php }else{?>
+                <ol>
+                    <?php foreach($paket['vendor-paket']['vendor'] as $key => $values){?>
+                        <li><?= $values['nama-vendor']?> => <?= $values['kota-vendor']?>, Rp. <?= $values['harga-vendor']?></li>
+                    <?php }?>
+                </ol>
+                <a href="/detail-paket/<?= $paket['kode-resi']?>/vendor">Edit Vendor</a></p>
             <?php }?>
-        </div>
-    </section>
-
-    <!-- Vendor Paket -->
-    <section>
-        <div class="control-form">
-            <h1><div class="judul-page">Vendor Invoice</div></h1>
-        </div>
-        <div class="container-detail-paket">
-            <p>Total Vendor Rp. 20.000</p>
-            <ol>
-                <li>Vendor A => Jakarta, Rp. 5000</li>
-                <li>Vendor B => Magelang, Rp. 15000</li>
-                <li>Vendor C => Surakarta, Rp. 50000</li>
-            </ol>
-            <a href="#">Edit Vendor</a>
         </div>
     </section>
 

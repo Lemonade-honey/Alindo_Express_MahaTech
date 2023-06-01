@@ -9,7 +9,12 @@ require_once (__DIR__ . "/../vendor/autoload.php");
 Router::add('GET', '/', PaketController::class, 'tambahPaket');
 Router::add('POST', '/', PaketController::class, 'postTambahPaket');
 
-Router::add('GET', '/detail-invoice/([0-9]*)', PaketController::class, 'detailPaket');
+// Paket Detail
+Router::add('GET', '/detail-paket/([0-9]*)', PaketController::class, 'detailPaket');
+
+// Paket Vendor
+Router::add('GET', '/detail-paket/([0-9]*)/vendor', PaketController::class, 'vendorPaket');
+Router::add('POST', '/detail-paket/([0-9]*)/vendor', PaketController::class, 'postVendorPaket');
 
 // RUN All Route
 Router::run();

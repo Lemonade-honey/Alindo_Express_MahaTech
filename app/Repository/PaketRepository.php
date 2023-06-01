@@ -77,4 +77,11 @@ class PaketRepository{
             $stmt->closeCursor();
         }
     }
+
+    public function updateInvoiceVendor(Paket $paket): Paket{
+        $stmt = $this->connection->prepare('UPDATE paket SET vendor_paket = ?, update_paket = ? WHERE resi = ? ');
+        $stmt->execute([$paket->vendorPaket, $paket->updatePaket, $paket->kodeResi]);
+
+        return $paket;
+    }
 }

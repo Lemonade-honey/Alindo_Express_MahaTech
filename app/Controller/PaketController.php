@@ -5,6 +5,7 @@ namespace Mahatech\AlindoExpress\Controller;
 use Mahatech\AlindoExpress\App\View;
 use Mahatech\AlindoExpress\Config\Database;
 use Mahatech\AlindoExpress\Model\Paket\PaketRegisterRequest;
+use Mahatech\AlindoExpress\Model\Vendor\VendorPaketRegisterRequest;
 use Mahatech\AlindoExpress\Repository\PaketRepository;
 use Mahatech\AlindoExpress\Service\PaketService;
 
@@ -38,8 +39,12 @@ class PaketController{
         $request->alamatPenerima = $_POST['alamat-tujuan'];
         $request->hpPenerima = $_POST['no-HP-penerima'];
         $request->biayaKirim = $_POST['biaya-kirim'];
-        $request->keteranganBiayaLainnya = $_POST['keterangan'];
-        $request->hargaBiayaLainnya = $_POST['harga'];
+        if(isset($_POST['keterangan'])){
+            $request->keteranganBiayaLainnya = $_POST['keterangan'];
+        }
+        if(isset($_POST['harga'])){
+            $request->hargaBiayaLainnya = $_POST['harga'];
+        }
         $request->totalBiaya = $_POST['total_harga'];
 
         // Karyawan
@@ -61,6 +66,39 @@ class PaketController{
             View::render('Paket/detail-paket', [
                 'response-paket' => $this->paketService->detailPaket($kodeResi)
             ]);
+        } catch(\Exception $ex){
+            die($ex->getMessage());
+        }
+    }
+
+    /**
+     * GET VENDOR PAKET
+     * 
+     * Menampilkan data vendor pada target invoice/paket
+     */
+    public function vendorPaket(string $kodeResi){
+        try{
+            View::render('Paket/vendor-paket', [
+                'response-paket' => $this->paketService->detailPaket($kodeResi)
+            ]);
+        } catch (\Exception $ex){
+            die($ex->getMessage());
+        }
+    }
+
+    /**
+     * POST VENDOR PAKET
+     * 
+     * Menambahkan data Vendor pada target invoice/paket
+     */
+    public function postVendorPaket(string $kodeResi){
+        $request = new VendorPaketRegisterRequest;
+        $request->namaVendor = $_POST['nama'];
+        $request->kotaVendor = $_POST['kota'];
+        $request->hargaVendor = $_POST['harga'];
+        try{
+            $this->paketService->tambahVendor($request, $kodeResi);
+            View::redirect('/detail-paket/' . $kodeResi);
         } catch(\Exception $ex){
             die($ex->getMessage());
         }

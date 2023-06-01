@@ -6,6 +6,7 @@ use Mahatech\AlindoExpress\Config\Database;
 use Mahatech\AlindoExpress\Domain\Paket;
 use Mahatech\AlindoExpress\Model\Paket\PaketRegisterRequest;
 use Mahatech\AlindoExpress\Model\Paket\PaketRegisterResponse;
+use Mahatech\AlindoExpress\Model\Vendor\VendorPaketRegisterRequest;
 use Mahatech\AlindoExpress\Repository\PaketRepository;
 
 class PaketService{
@@ -164,7 +165,7 @@ class PaketService{
      * 
      * return berupa string gabungan dari keterangan dan harga
      */
-    public function biayaLainnya(PaketRegisterRequest $request): ?array{
+    private function biayaLainnya(PaketRegisterRequest $request): ?array{
         if($request->keteranganBiayaLainnya == null || $request->keteranganBiayaLainnya == '' && $request->hargaBiayaLainnya == null || $request->hargaBiayaLainnya == ''){
             return null;
         }else{
@@ -266,5 +267,101 @@ class PaketService{
         }else{
             throw new \Exception('Data tidak ditemukan');
         }        
+    }
+
+    /**
+     * TAMBAH VENDOR KE PAKET
+     */
+    public function tambahVendor(VendorPaketRegisterRequest $request, string $kodeResi){
+
+        try{
+            Database::beginTransaction();
+            
+            $paket = new Paket;
+            // check apakah kode resi ada di database
+            $paket = $this->paketRepository->findByKodeResi($kodeResi);
+            // jika ada semua data sudah dipindah ke obj paket
+
+            if($paket != null){
+                // ubah ke bentuk array
+                $update = unserialize($paket->updatePaket);
+
+                // buat update baru
+                $update[] = "Update Vendor => " . " nama orang [" . date('H:i, d M Y') . "]";
+                $paket->updatePaket = serialize($update);
+
+                $paket->vendorPaket = serialize($this->vendorLogic($request));
+                // update data paket vendor
+                $this->paketRepository->updateInvoiceVendor($paket);
+            }else{
+                throw new \Exception('Failde Update, Kode resi tidak ditemukan didatabase');
+            }
+
+            Database::commitTransaction();
+        }catch(\Exception $ex){
+            Database::rollbackTransaction();
+            throw $ex;
+        }
+    }
+
+    private function tambahVendorValidate(VendorPaketRegisterRequest $request){
+        if(isset($request->namaVendor)){
+            foreach($request->namaVendor as $key => $value){
+                if($value == null || $value == ''){
+                    throw new \Exception('nama vendor ada yang kosong');
+                }
+            }
+        }else{
+            $request->namaVendor = null;
+        }
+
+        if(isset($request->kotaVendor)){
+            foreach ($request->kotaVendor as $key => $value) {
+                if($value == null || $value == ''){
+                    throw new \Exception('kota vendor ada yang kosong');
+                }
+            }
+        }else{
+            $request->kotaVendor = null;
+        }
+
+        if(isset($request->hargaVendor)){
+            foreach ($request->hargaVendor as $key => $value) {
+                if($value == null || $value <= 0){
+                    throw new \Exception('harga vendor ada yang kosong');
+                }
+            }
+        }else{
+            $request->hargaVendor = null;
+        }
+
+        // if(!isset($request->hargaVendor) && !isset($request->namaVendor) && !isset($request->kotaVendor)){
+        //     return null;
+        // }
+    }
+
+    private function vendorLogic(VendorPaketRegisterRequest $request): array{
+        $gabungan = [];
+        $this->tambahVendorValidate($request);
+        if($request->kotaVendor != null){
+            for($i = 0; $i < count($request->kotaVendor); $i++){
+                $gabungan[] = [
+                    'nama-vendor' => $request->namaVendor[$i],
+                    'kota-vendor' => $request->kotaVendor[$i],
+                    'harga-vendor' => $request->hargaVendor[$i]
+                ];
+            }
+            $totalHarga = 10;
+        }else{
+            $totalHarga = 0;
+            $gabungan = null;
+        }
+
+        $vendor = [
+            'total-harga' => $totalHarga,
+            'vendor' => $gabungan
+        ];
+
+        return $vendor;
     }
 }
