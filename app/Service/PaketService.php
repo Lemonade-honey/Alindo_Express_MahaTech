@@ -3,6 +3,7 @@
 namespace Mahatech\AlindoExpress\Service;
 
 use Mahatech\AlindoExpress\Config\Database;
+use Mahatech\AlindoExpress\Config\DotEnv;
 use Mahatech\AlindoExpress\Domain\Paket;
 use Mahatech\AlindoExpress\Model\Paket\PaketRegisterRequest;
 use Mahatech\AlindoExpress\Model\Paket\PaketRegisterResponse;
@@ -19,7 +20,8 @@ class PaketService{
     public function tambahPaket(PaketRegisterRequest $request): PaketRegisterResponse{
         $this->tambahPaketValidation($request);
 
-        date_default_timezone_set("Asia/Jakarta");
+        DotEnv::set_default_timezone();
+        // date_default_timezone_set("Asia/Jakarta");
         $dataPaket = [
             "kota_asal" => $request->kotaAsal,
             "kota_tujuan" => $request->kotaTujuan,
@@ -287,6 +289,7 @@ class PaketService{
                 $update = unserialize($paket->updatePaket);
 
                 // buat update baru
+                DotEnv::set_default_timezone();
                 $update[] = "Update Vendor => " . " nama orang [" . date('H:i, d M Y') . "]";
                 $paket->updatePaket = serialize($update);
 
