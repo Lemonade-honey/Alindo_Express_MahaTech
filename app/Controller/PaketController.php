@@ -19,6 +19,12 @@ class PaketController{
         $this->paketService = new PaketService($paketRepository);
     }
 
+    public function listPaket(){
+        View::render('Paket/list-invoice', [
+            'response-paket' => $this->paketService->listPaket()
+        ]);
+    }
+
     public function tambahPaket(){
         View::render('Paket/invoice-paket');
     }
@@ -98,7 +104,7 @@ class PaketController{
         $request->hargaVendor = $_POST['harga'];
         try{
             $this->paketService->tambahVendor($request, $kodeResi);
-            View::redirect('/detail-paket/' . $kodeResi);
+            View::redirect('/paket/detail-paket/' . $kodeResi);
         } catch(\Exception $ex){
             die($ex->getMessage());
         }

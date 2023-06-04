@@ -20,6 +20,29 @@ class PaketRepository{
         return $paket;
     }
 
+    /**
+     * Show All Data Paket
+     * 
+     * Menampilkan semua isi data dari database
+     */
+    public function getAllData(): ?array{
+        $stmt = $this->connection->prepare('SELECT resi, tanggal_pembuatan, data_paket, status_paket FROM paket');
+        $stmt->execute();
+
+        try {
+            if($row = $stmt->fetchAll(PDO::FETCH_ASSOC)){
+                $array = [];
+                foreach($row as $data){
+                    $array[] = $data;
+                }
+
+                return $array;
+            }
+        } finally{
+            $stmt->closeCursor();
+        }
+    }
+
     public function findByKodeResi(string $kodeResi): ?Paket{
         $stmt = $this->connection->prepare('SELECT resi, tanggal_pembuatan, data_paket, biaya_paket, vendor_paket, update_paket, status_paket FROM paket WHERE resi = ?');
         $stmt->execute([$kodeResi]);

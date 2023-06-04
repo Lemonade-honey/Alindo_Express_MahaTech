@@ -1,0 +1,25 @@
+.container{
+    align-items: start;
+    max-width: 100%;
+    width: 100%;
+    display: block;
+    overflow-x: scroll;
+}
+
+table{
+    width: 100%;
+    min-width: 40rem;
+    overflow-x: scroll;
+}table, th, tr, td{
+    border: 1px solid #000;
+    border-collapse: collapse;
+    padding: .3rem;
+}td:first-child, td:nth-child(2), td:nth-child(3){
+    text-align: center;
+}
+th{
+    background: #6ad161;
+}
+tr:nth-child(even){
+    background: rgb(231, 231, 231);
+}

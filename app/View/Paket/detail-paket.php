@@ -125,11 +125,9 @@
                         <p class="box-input" id="show_total_harga">Rp. <?= $paket['biaya-paket']['biaya_total']?></p>
                     </div>
                     <div class="form-submit">
-                        <!-- <p class="btn-submit red" id="cancel">Cancel</p> -->
                         <button type="button" class="btn-submit red" id="cancel">Cancel Invoice</button>
-                        <!-- <p class="btn-submit" id="submit">Buat Invoice</p> -->
-                        <button type="button" class="btn-submit" id="submit">Edit Invoice</button>
-                        <button type="button" class="btn-submit green" id="submit">Cetak Invoice</button>
+                        <button type="button" class="btn-submit" id="submit">Cetak Invoice</button>
+                        <button type="button" class="btn-submit green" id="submit">Cetak Resi</button>
                     </div>
                 </div>
             </form>
@@ -160,7 +158,7 @@
                         <li><?= $values['nama-vendor']?> => <?= $values['kota-vendor']?>, Rp. <?= $values['harga-vendor']?></li>
                     <?php }?>
                 </ol>
-                <a href="/detail-paket/<?= $paket['kode-resi']?>/vendor">Edit Vendor</a></p>
+                <a href="/paket/detail-paket/<?= $paket['kode-resi']?>/vendor">Edit Vendor</a></p>
             <?php }?>
         </div>
     </section>

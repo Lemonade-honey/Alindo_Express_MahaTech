@@ -80,10 +80,6 @@ class PaketService{
 
     // Validate Form Input
     private function tambahPaketValidation(PaketRegisterRequest $request){
-        // Validate type is not String
-        // if(is_string($request->berat) && is_string($request->beratVolume) && is_string($request->biayaKirim) && is_string($request->hargaPerKilo) && is_string($request->jumlahKoli) &&  is_string($request->hpPenerima) && is_string($request->hpPengirim) && is_string($request->totalBiaya)){
-        //     throw new \Exception('Invalid type data, harus number');
-        // }
 
         // Kota Asal
         if($request->kotaAsal == null || $request->kotaAsal == ''){
@@ -366,5 +362,21 @@ class PaketService{
         ];
 
         return $vendor;
+    }
+
+    /**
+     * LIST INVOICE PAKET
+     */
+    public function listPaket(): array{
+        foreach($this->paketRepository->getAllData() as $unserialize){
+            $data[] = [
+                'resi' => $unserialize['resi'],
+                'tanggal' => $unserialize['tanggal_pembuatan'],
+                'data_paket' => unserialize($unserialize['data_paket']),
+                'status_paket' => $unserialize['status_paket']
+            ];
+        }
+
+        return $data;
     }
 }
