@@ -151,8 +151,9 @@
         </div>
         <div class="container-detail-paket">
             <?php if($paket['vendor-paket'] == null || $paket['vendor-paket']['vendor'] == null){?>
-                <p>Vendor Set Empty <a href="/detail-paket/<?= $paket['kode-resi']?>/vendor">Set up</a></p>
+                <p>Vendor Set Empty <a href="/paket/detail-paket/<?= $paket['kode-resi']?>/vendor">Set up</a></p>
             <?php }else{?>
+                <p>Total Harga Vendor Rp. <?= $paket['vendor-paket']['total-harga']?></p>
                 <ol>
                     <?php foreach($paket['vendor-paket']['vendor'] as $key => $values){?>
                         <li><?= $values['nama-vendor']?> => <?= $values['kota-vendor']?>, Rp. <?= $values['harga-vendor']?></li>
