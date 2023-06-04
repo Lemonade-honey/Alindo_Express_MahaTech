@@ -326,22 +326,22 @@ class PaketService{
 
         if(isset($request->hargaVendor)){
             foreach ($request->hargaVendor as $key => $value) {
-                if($value == null || $value <= 0){
+                if(preg_match('/^[A-Za-z]*$/',$value)){
+                    throw new \Exception('harga vendor harus angka');
+                }
+                elseif($value == null || $value <= 0){
                     throw new \Exception('harga vendor ada yang kosong');
                 }
             }
         }else{
             $request->hargaVendor = null;
         }
-
-        // if(!isset($request->hargaVendor) && !isset($request->namaVendor) && !isset($request->kotaVendor)){
-        //     return null;
-        // }
     }
 
     private function vendorLogic(VendorPaketRegisterRequest $request): array{
         $gabungan = [];
         $this->tambahVendorValidate($request);
+        $totalHarga = 0;
         if($request->kotaVendor != null){
             for($i = 0; $i < count($request->kotaVendor); $i++){
                 $gabungan[] = [
@@ -349,10 +349,9 @@ class PaketService{
                     'kota-vendor' => $request->kotaVendor[$i],
                     'harga-vendor' => $request->hargaVendor[$i]
                 ];
+                $totalHarga += (int)$request->hargaVendor[$i];
             }
-            $totalHarga = 10;
         }else{
-            $totalHarga = 0;
             $gabungan = null;
         }
 
