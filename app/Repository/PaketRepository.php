@@ -13,9 +13,14 @@ class PaketRepository{
         $this->connection = $connection;
     }
 
+    /**
+     * Save data ke paket tabel
+     * 
+     * data yang disimpan ke atribut : resi, tanggal pembuatan, data paket, biaya paket, vendor paket, update paket.
+     */
     public function save(Paket $paket): Paket{
-        $stmt = $this->connection->prepare('INSERT INTO paket(resi, tanggal_pembuatan, data_paket, biaya_paket, vendor_paket, update_paket) VALUES(?, ?, ?, ?, ?, ?)');
-        $stmt->execute([$paket->kodeResi, $paket->tanggalPembuatan, $paket->dataPaket, $paket->biayaPaket, $paket->vendorPaket, $paket->updatePaket]);
+        $stmt = $this->connection->prepare('INSERT INTO paket(resi, tanggal_pembuatan, data_paket, biaya_paket, vendor_paket, update_paket, status_paket) VALUES(?, ?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$paket->kodeResi, $paket->tanggalPembuatan, $paket->dataPaket, $paket->biayaPaket, $paket->vendorPaket, $paket->updatePaket, 'Proses']);
 
         return $paket;
     }
