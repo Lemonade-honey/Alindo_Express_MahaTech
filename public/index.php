@@ -2,6 +2,7 @@
 
 use Mahatech\AlindoExpress\App\Router;
 use Mahatech\AlindoExpress\Controller\HomeController;
+use Mahatech\AlindoExpress\Controller\LaporanController;
 use Mahatech\AlindoExpress\Controller\PaketController;
 
 require_once (__DIR__ . "/../vendor/autoload.php");
@@ -22,6 +23,9 @@ Router::add('GET', '/paket/detail-paket/([0-9]*)', PaketController::class, 'deta
 Router::add('GET', '/paket/detail-paket/([0-9]*)/vendor', PaketController::class, 'vendorPaket');
 Router::add('POST', '/paket/detail-paket/([0-9]*)/vendor', PaketController::class, 'postVendorPaket');
 
+// Laporan
+Router::add('GET', '/laporan', LaporanController::class, 'index');
+Router::add('GET', '/laporan/([0-9-]*)', LaporanController::class, 'detail');
 
 // RUN All Route
 Router::run();

@@ -365,6 +365,10 @@ class PaketService{
 
     /**
      * LIST INVOICE PAKET
+     * 
+     * nilai return berupa array yang isinya resi, data paket, vendor dan status paket
+     * 
+     * @return array
      */
     public function listPaket(): array{
         foreach($this->paketRepository->getAllData() as $unserialize){
@@ -372,10 +376,38 @@ class PaketService{
                 'resi' => $unserialize['resi'],
                 'tanggal' => $unserialize['tanggal_pembuatan'],
                 'data_paket' => unserialize($unserialize['data_paket']),
+                'biaya_paket' => unserialize($unserialize['biaya_paket']),
+                'vendor_paket' => unserialize($unserialize['vendor_paket']),
                 'status_paket' => $unserialize['status_paket']
             ];
         }
 
         return $data;
+    }
+
+    /**
+     * LIST INVOICE PAKET
+     * 
+     * nilai return berupa array yang isinya resi, data paket, vendor dan status paket
+     * 
+     * @return array
+     */
+    public function listPaketByTanggal(string $tanggal): ?array{
+        if($this->paketRepository->getDataByDate($tanggal) != null){
+            foreach($this->paketRepository->getDataByDate($tanggal) as $data){
+                $gabungan[] = [
+                    'resi' => $data['resi'],
+                    'tanggal' => $data['tanggal_pembuatan'],
+                    'data_paket' => unserialize($data['data_paket']),
+                    'biaya_paket' => unserialize($data['biaya_paket']),
+                    'vendor_paket' => unserialize($data['vendor_paket']),
+                    'status_paket' => $data['status_paket']
+                ];
+            }
+
+            return $gabungan;
+        }else{
+            return null;
+        }
     }
 }
