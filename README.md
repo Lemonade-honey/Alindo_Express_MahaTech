@@ -21,5 +21,6 @@ pastikan sudah masuk path folder public
 3. nyalakan Server PHP bawaan ( dengan port default project 8080 )
 
 ``` consol
-PHP -S localhost:8080
+php -S localhost:8080
 ```
+jika saat diketik ada error pada promp, maka ada kemungkinan path PHP belum di config di env var path windows
