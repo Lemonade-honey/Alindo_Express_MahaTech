@@ -59,7 +59,7 @@ class PaketController{
         try {
             $response = $this->paketService->tambahPaket($request);
             //jika tidak ada error response
-            View::redirect('/detail-paket/' . $response->kodeResi);
+            View::redirect('/paket/detail-paket/' . $response->kodeResi);
         } catch (\Exception $ex) {
             View::render('Paket/invoice-paket', [
                 'error' => $ex->getMessage()
