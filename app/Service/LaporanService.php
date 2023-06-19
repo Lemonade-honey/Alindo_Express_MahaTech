@@ -8,6 +8,11 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 
 class LaporanService{
 
+    /**
+     * Service Download Logic
+     * 
+     * Fungsi Service yang menghandel downloadd rekap laporan dalam bentuk exel
+     */
     public function download(array $dataArray, string $tanggalTarget): void{
         if($dataArray != null){
             $spreadsheet = new Spreadsheet();

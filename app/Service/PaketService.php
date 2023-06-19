@@ -390,7 +390,7 @@ class PaketService{
      * 
      * nilai return berupa array yang isinya resi, data paket, vendor dan status paket
      * 
-     * @return array | \Exception
+     * @return array
      */
     public function listPaketByTanggal(string $tanggal): ?array{
         if($this->paketRepository->getDataByDate($tanggal) != null){
