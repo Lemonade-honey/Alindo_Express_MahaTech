@@ -390,7 +390,7 @@ class PaketService{
      * 
      * nilai return berupa array yang isinya resi, data paket, vendor dan status paket
      * 
-     * @return array
+     * @return array | \Exception
      */
     public function listPaketByTanggal(string $tanggal): ?array{
         if($this->paketRepository->getDataByDate($tanggal) != null){
@@ -407,7 +407,7 @@ class PaketService{
 
             return $gabungan;
         }else{
-            return null;
+            throw new \Exception('Data Not Found');
         }
     }
 }
