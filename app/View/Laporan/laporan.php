@@ -23,7 +23,7 @@
 <body>
     <section>
         <div class="container">
-            <button>Cetak Exel</button>
+            <a href="/laporan/2023-06/download">Cetak Exel</a>
             <table>
                 <thead>
                     <th>No</th>

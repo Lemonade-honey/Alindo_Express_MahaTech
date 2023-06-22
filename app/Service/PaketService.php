@@ -407,7 +407,7 @@ class PaketService{
 
             return $gabungan;
         }else{
-            return null;
+            throw new \Exception('Data Not Found');
         }
     }
 }

@@ -26,6 +26,7 @@ Router::add('POST', '/paket/detail-paket/([0-9]*)/vendor', PaketController::clas
 // Laporan
 Router::add('GET', '/laporan', LaporanController::class, 'index');
 Router::add('GET', '/laporan/([0-9-]*)', LaporanController::class, 'detail');
+Router::add('GET', '/laporan/([0-9-]*)/download', LaporanController::class, 'detailDownload');
 
 // RUN All Route
 Router::run();

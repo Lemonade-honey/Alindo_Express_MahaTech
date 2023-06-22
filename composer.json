@@ -8,6 +8,7 @@
         }
     },
     "require": {
-        "php": ">=8"
+        "php": ">=8",
+        "phpoffice/phpspreadsheet": "^1.29"
     }
 }
