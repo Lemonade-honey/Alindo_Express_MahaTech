@@ -5,12 +5,13 @@ class Router{
     private static array $routes;
 
     // function membuat alur
-    public static function add(string $method, string $path, string $controller, string $function){
+    public static function add(string $method, string $path, string $controller, string $function, ?array $middleware = []){
         self::$routes[] = [
             "method" => $method,
             "path" => $path,
             "controller" => $controller,
-            "function" => $function
+            "function" => $function,
+            "middleware" => $middleware
         ];
     }
 
@@ -31,6 +32,12 @@ class Router{
             $pattern = "#^" . $route['path'] . "$#";
             if(preg_match($pattern, $path, $variabels) && $route['method'] == $method){
                 // echo "PATH ADA DI DALAM ROUTE";
+
+                // run middleware
+                foreach($route['middleware'] as $middleware){
+                    $interface = new $middleware;
+                    $interface->before();
+                }
 
                 $controller = new $route['controller'];
                 $function = $route['function'];
