@@ -48,7 +48,7 @@ class SessionRepository{
     /**
      * Delete session by Id
      */
-    public function delete(string $idSession): bool{
+    public function deleteById(string $idSession): bool{
         $stmt = $this->connection->prepare('DELETE FROM sessions WHERE id = ?');
         $stmt->execute([$idSession]);
 
