@@ -4,7 +4,7 @@ namespace Mahatech\AlindoExpress\Repository;
 
 use Mahatech\AlindoExpress\Domain\Session;
 use PDO;
-class SessionService{
+class SessionRepository{
     private PDO $connection;
     public function __construct(PDO $connection) {
         $this->connection = $connection;
