@@ -2,6 +2,7 @@
 namespace Mahatech\AlindoExpress\Service;
 
 use Exception;
+use Mahatech\AlindoExpress\Config\DotEnv;
 use Mahatech\AlindoExpress\Domain\User;
 use Mahatech\AlindoExpress\Model\User\UserCreateRequest;
 use Mahatech\AlindoExpress\Model\User\UserLoginRequest;
@@ -31,6 +32,9 @@ class UserService{
             ];
             $user->userData = serialize($data);
             $user->userAccsessLevel = $req->userAccsessLevel;
+
+            DotEnv::set_default_timezone();
+            $user->tanggalPembuatan = date('Y/m/d H:i:s');
 
             $this->userRepo->save($user);
         }

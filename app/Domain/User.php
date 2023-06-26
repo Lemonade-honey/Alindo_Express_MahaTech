@@ -5,4 +5,5 @@ class User{
     public string $userPassword;
     public string $userData;
     public int $userAccsessLevel;
+    public string $tanggalPembuatan;
 }

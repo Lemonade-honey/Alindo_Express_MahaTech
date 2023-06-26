@@ -13,8 +13,8 @@ class UserRepository{
      * Save User Data
      */
     public function save(User $user): User{
-        $stmt = $this->connection->prepare('INSERT INTO users(id, password, data, access_level) VALUES(?, ?, ?, ?)');
-        $stmt->execute([$user->userId, $user->userPassword, $user->userData, $user->userAccsessLevel]);
+        $stmt = $this->connection->prepare('INSERT INTO users(id, password, data, access_level, tanggal_pembuatan) VALUES(?, ?, ?, ?, ?)');
+        $stmt->execute([$user->userId, $user->userPassword, $user->userData, $user->userAccsessLevel, $user->tanggalPembuatan]);
 
         return $user;
     }
