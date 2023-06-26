@@ -7,6 +7,36 @@
             "Mahatech\\AlindoExpress\\": "app/"
         }
     },
+    "authors": [
+        {
+            "name": "Daffa Alif Murtaja",
+            "role": "Tim Manager, Backend Dev"
+        },
+        {
+            "name": "Rizal Fahri Setiawan",
+            "role": "Sekretaris, Bendahara"
+        },
+        {
+            "name": "Akmal Hafif Alkafi",
+            "role": "Analisis require"
+        },
+        {
+            "name": "Muhammad Avila Landry",
+            "role": "Backend Dev"
+        },
+        {
+            "name": "Maulana Asyrafil Anam",
+            "role": "UI Designer"
+        },
+        {
+            "name": "Muhammad Faris Rizaldi",
+            "role": "Frontend Dev"
+        },
+        {
+            "name": "Widiyanto Firmansyah",
+            "role": "Tester"
+        }
+    ],
     "require": {
         "php": ">=7",
         "phpoffice/phpspreadsheet": "^1.29"
