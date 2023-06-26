@@ -6,7 +6,7 @@ use Mahatech\AlindoExpress\Domain\Session;
 use Mahatech\AlindoExpress\Repository\SessionRepository;
 
 class SessionService{
-    private string $COOKIE_NAME = "ALINDO";
+    private static string $COOKIE_NAME = "ALINDO";
     private SessionRepository $sessionRepo;
 
     public function __construct($sessionRepo) {
