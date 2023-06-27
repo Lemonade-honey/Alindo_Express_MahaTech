@@ -45,26 +45,6 @@ class UserRepository{
     }
 
     /**
-     * Get All Staff Data
-     */
-    public function getAllData(): array{
-        $stmt = $this->connection->prepare('SELECT * FROM users');
-        $stmt->execute();
-
-        try{
-            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            foreach($data as $row){
-                $array[] = $row;
-            }
-
-            return $array;
-        }
-        finally{
-            $stmt->closeCursor();
-        }
-    }
-
-    /**
      * Jumlah Row pada tabel users DB
      */
     public function totalRow(){

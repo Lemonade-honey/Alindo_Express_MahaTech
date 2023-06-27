@@ -113,20 +113,6 @@ class UserService{
     }
 
     /**
-     * List Staf
-     */
-    public function getAllStaff(){
-        foreach ($this->userRepo->getAllData() as $row) {
-            $data[] = [
-                'id-user' => $row['id'],
-                'data' => unserialize($row['data'])
-            ];
-        }
-
-        return $data;
-    }
-
-    /**
      * Pagination, default 10/halaman
      */
     public function getStaffPag(int $halaman): array{
