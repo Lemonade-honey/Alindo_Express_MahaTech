@@ -62,4 +62,35 @@ class UserRepository{
             $stmt->closeCursor();
         }
     }
+
+    /**
+     * Jumlah Row pada tabel users DB
+     */
+    public function totalRow(){
+        $stmt = $this->connection->prepare('SELECT * FROM users');
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
+
+    /**
+     * Pagination User/Staff
+     */
+    public function pagination(int $halamanAwal, int $batas): array{
+        $stmt = $this->connection->prepare('SELECT * FROM users LIMIT :start, :batas');
+        $stmt->bindParam(':start', $halamanAwal, PDO::PARAM_INT);
+        $stmt->bindParam(':batas', $batas, PDO::PARAM_INT);
+        $stmt->execute();
+        try{
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($data as $row){
+                $array[] = $row;
+            }
+
+            return $array;
+        }
+        finally{
+            $stmt->closeCursor();
+        }
+    }
 }

@@ -125,4 +125,31 @@ class UserService{
 
         return $data;
     }
+
+    /**
+     * Pagination, default 10/halaman
+     */
+    public function getStaffPag(int $halaman): array{
+        if(is_string($halaman)){
+            throw new Exception('page number must type of string');
+        }else if($halaman < 0){
+            throw new Exception('invalid page number');
+        }else if($halaman > ceil($this->userRepo->totalRow()/10)){
+            throw new Exception('invalid page number');
+        }
+
+        try{
+            $page = ($halaman * 10) - 10;
+            foreach ($this->userRepo->pagination($page, 10) as $dataDB) {
+                $data[] = [
+                    'number' => ++$page,
+                    'id-user' => $dataDB['id'],
+                    'data' => unserialize($dataDB['data'])
+                ];
+            }
+            return $data;
+        } catch(Exception $ex){
+            throw $ex;
+        }
+    }
 }
