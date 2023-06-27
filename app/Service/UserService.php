@@ -24,10 +24,10 @@ class UserService{
             $user = new User;
             $user->userId = $req->userId;
             $user->userPassword = password_hash($req->userPassword, PASSWORD_BCRYPT);
-            
+            $user->userFullname = $req->userFullname;
+
             // user data
             $data = [
-                'fullname' => $req->userFullname,
                 'job' => $req->userJobDesk
             ];
             $user->userData = serialize($data);
@@ -143,7 +143,8 @@ class UserService{
             foreach ($this->userRepo->pagination($page, 10) as $dataDB) {
                 $data[] = [
                     'number' => ++$page,
-                    'id-user' => $dataDB['id'],
+                    'id' => $dataDB['id'],
+                    'fullname'=> $dataDB['fullname'],
                     'data' => unserialize($dataDB['data'])
                 ];
             }

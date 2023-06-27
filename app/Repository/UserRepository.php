@@ -13,8 +13,8 @@ class UserRepository{
      * Save User Data
      */
     public function save(User $user): User{
-        $stmt = $this->connection->prepare('INSERT INTO users(id, password, data, access_level, tanggal_pembuatan) VALUES(?, ?, ?, ?, ?)');
-        $stmt->execute([$user->userId, $user->userPassword, $user->userData, $user->userAccsessLevel, $user->tanggalPembuatan]);
+        $stmt = $this->connection->prepare('INSERT INTO users(id, password, fullname, data, access_level, tanggal_pembuatan) VALUES(?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$user->userId, $user->userPassword, $user->userFullname, $user->userData, $user->userAccsessLevel, $user->tanggalPembuatan]);
 
         return $user;
     }
@@ -31,6 +31,7 @@ class UserRepository{
                 $user = new User;
                 $user->userId = $row['id'];
                 $user->userPassword = $row['password'];
+                $user->userFullname = $row['fullname'];
                 $user->userData = $row['data'];
                 $user->userAccsessLevel = $row['access_level'];
 
@@ -77,7 +78,7 @@ class UserRepository{
      * Pagination User/Staff
      */
     public function pagination(int $halamanAwal, int $batas): array{
-        $stmt = $this->connection->prepare('SELECT * FROM users LIMIT :start, :batas');
+        $stmt = $this->connection->prepare('SELECT id, fullname, data FROM users LIMIT :start, :batas');
         $stmt->bindParam(':start', $halamanAwal, PDO::PARAM_INT);
         $stmt->bindParam(':batas', $batas, PDO::PARAM_INT);
         $stmt->execute();
