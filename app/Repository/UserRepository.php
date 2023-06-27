@@ -94,4 +94,31 @@ class UserRepository{
             $stmt->closeCursor();
         }
     }
+
+    /**
+     * Search User similiar fullname user
+     * 
+     * Mencari berdasarkan kemiripan data fullname
+     */
+    public function searchByFullname(string $fullname): ?array{
+        $stmt = $this->connection->prepare("SELECT id, fullname, data FROM users WHERE fullname LIKE CONCAT('%', ?, '%')");
+        $stmt->execute([$fullname]);
+
+        try{
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if($row){
+                foreach($row as $data){
+                    $array[] = $data;
+                }
+
+                return $array;
+            }else{
+                return null;
+            }
+
+        }finally{
+            $stmt->closeCursor();
+        }
+
+    }
 }

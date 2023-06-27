@@ -153,4 +153,36 @@ class UserService{
             throw $ex;
         }
     }
+
+    /**
+     * Search User Name Service
+     * 
+     * Mencari berdasarkan fullname yang mirip (LIKE)
+     */
+    public function searchFullname(string $name): ?array{
+        if($name == null || $name == ''){
+            throw new Exception('name search cannot be empty');
+        }
+
+        try{
+            $number = 1;
+            $dataDB = $this->userRepo->searchByFullname($name);
+            if($dataDB != null){
+                foreach($dataDB as $row){
+                    $data[] = [
+                        'number' => $number++,
+                        'id' => $row['id'],
+                        'fullname'=> $row['fullname'],
+                        'data' => unserialize($row['data'])
+                    ];
+                }
+
+                return $data;
+            }else{
+                return null;
+            }
+        } catch(Exception $ex){
+            throw $ex;
+        }
+    }
 }
