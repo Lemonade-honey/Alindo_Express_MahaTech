@@ -111,4 +111,18 @@ class UserService{
             throw new Exception('password cannot be empty!');
         }
     }
+
+    /**
+     * List Staf
+     */
+    public function getAllStaff(){
+        foreach ($this->userRepo->getAllData() as $row) {
+            $data[] = [
+                'id-user' => $row['id'],
+                'data' => unserialize($row['data'])
+            ];
+        }
+
+        return $data;
+    }
 }
