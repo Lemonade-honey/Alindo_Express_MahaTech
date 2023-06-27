@@ -163,4 +163,37 @@ class PaketRepository{
             $stmt->closeCursor();
         }
     }
+
+    /**
+     * Jumlah Row pada tabel paket DB
+     */
+    public function totalRow(){
+        $stmt = $this->connection->prepare('SELECT * FROM paket');
+        $stmt->execute();
+
+        return $stmt->rowCount();
+    }
+
+    /**
+     * Pagination Paket
+     * 
+     * menggunakan syntax limit
+     */
+    public function pagination(int $halamanAwal, int $batas): array{
+        $stmt = $this->connection->prepare('SELECT resi, tanggal_pembuatan, data_paket , status_paket FROM paket LIMIT :start, :batas');
+        $stmt->bindParam(':start', $halamanAwal, PDO::PARAM_INT);
+        $stmt->bindParam(':batas', $batas, PDO::PARAM_INT);
+        $stmt->execute();
+
+        try{
+            $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            foreach($data as $row){
+                $array[] = $row;
+            }
+
+            return $array;
+        } finally{
+            $stmt->closeCursor();
+        }
+    }
 }

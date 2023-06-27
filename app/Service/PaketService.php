@@ -2,6 +2,7 @@
 
 namespace Mahatech\AlindoExpress\Service;
 
+use Exception;
 use Mahatech\AlindoExpress\Config\Database;
 use Mahatech\AlindoExpress\Config\DotEnv;
 use Mahatech\AlindoExpress\Domain\Paket;
@@ -72,7 +73,7 @@ class PaketService{
                 goto Repeat;
             }
 
-        }catch (\Exception $exception) {
+        }catch (Exception $exception) {
             Database::rollbackTransaction();
             throw $exception;
         }
@@ -83,77 +84,77 @@ class PaketService{
 
         // Kota Asal
         if($request->kotaAsal == null || $request->kotaAsal == ''){
-            throw new \Exception('Inputan Kota Asal tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Kota Asal tidak boleh Null atau Kosong');
         }
 
         // Kota Tujuan
         if($request->kotaTujuan == null || $request->kotaTujuan == ''){
-            throw new \Exception('Inputan Kota Tujuan tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Kota Tujuan tidak boleh Null atau Kosong');
         }
 
         // Jumlah Koli
         if($request->jumlahKoli == null || $request->jumlahKoli == 0){
-            throw new \Exception('Inputan Jumlah Koli tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Jumlah Koli tidak boleh Null atau Kosong');
         }
 
         // Harga perkilo
         if($request->hargaPerKilo == null || $request->hargaPerKilo == 0){
-            throw new \Exception('Inputan Harga/Kilo tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Harga/Kilo tidak boleh Null atau Kosong');
         }
 
         // Berat Paket
         if($request->berat == null || $request->berat == 0){
-            throw new \Exception('Inputan Berat tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Berat tidak boleh Null atau Kosong');
         }
         
         // Berat Volume
         if($request->beratVolume == null || $request->beratVolume == 0){
-            throw new \Exception('Inputan Berat Volume tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Berat Volume tidak boleh Null atau Kosong');
         }
 
         // Kategori
         if($request->kategori == null || $request->kategori == ''){
-            throw new \Exception('Inputan Kategori tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Kategori tidak boleh Null atau Kosong');
         }
 
         // Pemeriksaan
         if($request->pemeriksaan == null){
-            throw new \Exception('Inputan Pemeriksaan tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Pemeriksaan tidak boleh Null atau Kosong');
         }
 
         // nama pengirim
         if($request->namaPengirim == null || $request->namaPengirim == '' ){
-            throw new \Exception('Inputan Nama Pengirim tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Nama Pengirim tidak boleh Null atau Kosong');
         }
         
         // HP Penerima
         if($request->hpPengirim == null || $request->hpPengirim == 0 ){
-            throw new \Exception('Inputan HP Pengirim tidak boleh Null atau Kosong');
+            throw new Exception('Inputan HP Pengirim tidak boleh Null atau Kosong');
         }
 
         // nama penerima
         if($request->namaPenerima == null || $request->namaPenerima == '' ){
-            throw new \Exception('Inputan Nama Penerima tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Nama Penerima tidak boleh Null atau Kosong');
         }
         
         // alamat penerima
         if($request->alamatPenerima == null || $request->alamatPenerima == '' ){
-            throw new \Exception('Inputan Alamat Penerima tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Alamat Penerima tidak boleh Null atau Kosong');
         }
         
         // HP Penerima
         if($request->hpPenerima == null || $request->hpPenerima == 0 ){
-            throw new \Exception('Inputan HP Penerima tidak boleh Null atau Kosong');
+            throw new Exception('Inputan HP Penerima tidak boleh Null atau Kosong');
         }
         
         // Biaya Kirim
         if($request->biayaKirim == null || $request->biayaKirim == 0 ){
-            throw new \Exception('Inputan Biaya Kirim tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Biaya Kirim tidak boleh Null atau Kosong');
         }
         
         // Total Biaya
         if($request->totalBiaya == null || $request->totalBiaya == 0 ){
-            throw new \Exception('Inputan Biaya Total tidak boleh Null atau Kosong');
+            throw new Exception('Inputan Biaya Total tidak boleh Null atau Kosong');
         }
         
     }
@@ -177,7 +178,7 @@ class PaketService{
 
                 return $gabungan;
             }else{
-                throw new \Exception('Inputan Biaya lainnya harus diisi semua');
+                throw new Exception('Inputan Biaya lainnya harus diisi semua');
             }
         }
     }
@@ -263,7 +264,7 @@ class PaketService{
 
             return $detailPaket;
         }else{
-            throw new \Exception('Data tidak ditemukan');
+            throw new Exception('Data tidak ditemukan');
         }        
     }
 
@@ -293,11 +294,11 @@ class PaketService{
                 // update data paket vendor
                 $this->paketRepository->updateInvoiceVendor($paket);
             }else{
-                throw new \Exception('Failde Update, Kode resi tidak ditemukan didatabase');
+                throw new Exception('Failde Update, Kode resi tidak ditemukan didatabase');
             }
 
             Database::commitTransaction();
-        }catch(\Exception $ex){
+        }catch(Exception $ex){
             Database::rollbackTransaction();
             throw $ex;
         }
@@ -307,7 +308,7 @@ class PaketService{
         if(isset($request->namaVendor)){
             foreach($request->namaVendor as $key => $value){
                 if($value == null || $value == ''){
-                    throw new \Exception('nama vendor ada yang kosong');
+                    throw new Exception('nama vendor ada yang kosong');
                 }
             }
         }else{
@@ -317,7 +318,7 @@ class PaketService{
         if(isset($request->kotaVendor)){
             foreach ($request->kotaVendor as $key => $value) {
                 if($value == null || $value == ''){
-                    throw new \Exception('kota vendor ada yang kosong');
+                    throw new Exception('kota vendor ada yang kosong');
                 }
             }
         }else{
@@ -327,10 +328,10 @@ class PaketService{
         if(isset($request->hargaVendor)){
             foreach ($request->hargaVendor as $key => $value) {
                 if(preg_match('/^[A-Za-z]*$/',$value)){
-                    throw new \Exception('harga vendor harus angka');
+                    throw new Exception('harga vendor harus angka');
                 }
                 elseif($value == null || $value <= 0){
-                    throw new \Exception('harga vendor ada yang kosong');
+                    throw new Exception('harga vendor ada yang kosong');
                 }
             }
         }else{
@@ -407,7 +408,37 @@ class PaketService{
 
             return $gabungan;
         }else{
-            throw new \Exception('Data Not Found');
+            throw new Exception('Data Not Found');
+        }
+    }
+
+    /**
+     * Pagination, default 10/halaman
+     */
+    public function getPaketPag(int $halaman){
+        if(is_string($halaman)){
+            throw new Exception('page number must type of string');
+        }else if($halaman < 0){
+            throw new Exception('invalid page number');
+        }else if($halaman > ceil($this->paketRepository->totalRow()/10)){
+            throw new Exception('invalid page number');
+        }
+
+        try{
+            $page = ($halaman * 10) - 10;
+            foreach($this->paketRepository->pagination($page, 10) as $row){
+                $data[] = [
+                    'number' => ++$page,
+                    'resi' => $row['resi'],
+                    'tanggal' => $row['tanggal_pembuatan'],
+                    'data_paket' => unserialize($row['data_paket']),
+                    'status_paket' => $row['status_paket']
+                ];
+            }
+
+            return $data;
+        } catch(Exception $ex){
+            throw $ex;
         }
     }
 }
